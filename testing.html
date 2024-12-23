@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .gslider {
+            overflow: hidden;
+            position: relative;
+            height: 600px;
+        }
+        
+        .gslide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .gslide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .gslide-content {
+            height: 100%;
+            padding: 2rem;
+        }
+        
+        .gslide-text {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        
+        .gslide-img {
+            height: 100%;
+            opacity: 0;
+        }
+        
+        .gslide-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gslider-nav {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .gslider-nav button {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .gslider-nav button.active {
+            background: rgba(255,255,255,0.6);
+        }
+        
+        .gslider-nav button:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .gslider {
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .gslide-content {
+                flex-direction: column;
+            }
+            
+            .gslide-text, .gslide-img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="gslider">
+    <div class="gslide active">
+        <div class="gslide-content container">
+            <div class="row h-100">
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="gslide-text">
+                        <h2>First Slide</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="gslide-img">
+                        <img src="/api/placeholder/800/600" alt="Slide 1">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="gslide">
+        <div class="gslide-content container">
+            <div class="row h-100">
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="gslide-text">
+                        <h2>Second Slide</h2>
+                        <p>Sed do eiusmod tempor incididunt ut labore et dolore.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="gslide-img">
+                        <img src="/api/placeholder/800/600" alt="Slide 2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="gslider-nav">
+        <button onclick="changeSlide(0)" class="active">1</button>
+        <button onclick="changeSlide(1)">2</button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.gslide');
+const navButtons = document.querySelectorAll('.gslider-nav button');
+let autoplayInterval;
+let isPlaying = true;
+const SLIDE_DURATION = 5000; // Time between slides in ms
+
+function updateNavButtons() {
+    navButtons.forEach((btn, index) => {
+        if (index < slides.length) {
+            btn.classList.toggle('active', index === currentSlide);
+        }
+    });
+}
+
+function animateSlide(slideIndex) {
+    const slide = slides[slideIndex];
+    const text = slide.querySelector('.gslide-text');
+    const img = slide.querySelector('.gslide-img');
+    
+    gsap.to(text, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+    });
+    
+    gsap.to(img, {
+        opacity: 1,
+        duration: 1,
+        ease: "power2.inOut"
+    });
+}
+
+function resetSlide(slideIndex) {
+    const slide = slides[slideIndex];
+    const text = slide.querySelector('.gslide-text');
+    const img = slide.querySelector('.gslide-img');
+    
+    gsap.set(text, {
+        opacity: 0,
+        y: 50
+    });
+    
+    gsap.set(img, {
+        opacity: 0
+    });
+}
+
+function changeSlide(newIndex) {
+    if (newIndex === currentSlide) return;
+    
+    if (newIndex >= slides.length) newIndex = 0;
+    if (newIndex < 0) newIndex = slides.length - 1;
+    
+    // Reset current slide
+    gsap.to(slides[currentSlide], {
+        opacity: 0,
+        duration: 0.5,
+        onComplete: () => {
+            slides[currentSlide].classList.remove('active');
+            resetSlide(currentSlide);
+            
+            // Show new slide
+            slides[newIndex].classList.add('active');
+            gsap.to(slides[newIndex], {
+                opacity: 1,
+                duration: 0.5,
+                onComplete: () => animateSlide(newIndex)
+            });
+        }
+    });
+    
+    currentSlide = newIndex;
+    updateNavButtons();
+}
+
+function startAutoplay() {
+    if (autoplayInterval) clearInterval(autoplayInterval);
+    autoplayInterval = setInterval(() => {
+        changeSlide(currentSlide + 1);
+    }, SLIDE_DURATION);
+}
+
+function stopAutoplay() {
+    if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+    }
+}
+
+function toggleAutoplay() {
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    isPlaying = !isPlaying;
+    
+    if (isPlaying) {
+        startAutoplay();
+        playPauseBtn.textContent = '⏸️';
+    } else {
+        stopAutoplay();
+        playPauseBtn.textContent = '▶️';
+    }
+}
+
+// Pause on hover
+document.querySelector('.gslider').addEventListener('mouseenter', () => {
+    if (isPlaying) stopAutoplay();
+});
+
+document.querySelector('.gslider').addEventListener('mouseleave', () => {
+    if (isPlaying) startAutoplay();
+});
+
+// Initial setup
+animateSlide(0);
+startAutoplay();
+</script>
+
+</body>
+</html>
