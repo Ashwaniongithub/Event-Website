@@ -9,6 +9,7 @@
 html, body{
     width: 100%;
     height: 100%;
+    
 }
 
 .navbar {
@@ -615,4 +616,138 @@ html, body{
 .carousel-item img{
     height: 600px;
     width: 100%;
+}
+
+
+/*  */
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+    padding: 2rem 0;
+    position: relative;
+}
+
+/* Hexagon container */
+.hexagon-container {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.hexagon {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.hexagon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #d4af37, #f4e4bc);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.hexagon-content {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: white;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hexagon-content img {
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+}
+
+/* Timeline line and dot */
+.timeline-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -60px;
+    width: 2px;
+    background-color: #d4af37;
+}
+
+.timeline-dot {
+    position: absolute;
+    right: -64px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: #d4af37;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+/* Content styling */
+.timeline-content {
+    padding-left: 2rem;
+}
+
+.time-tag {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.event-title {
+    color: #2f5233;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.event-description {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.view-more {
+    color: #666;
+    text-decoration: none;
+    border-bottom: 1px solid #666;
+    padding-bottom: 2px;
+}
+
+.view-more:hover {
+    color: #2f5233;
+    border-color: #2f5233;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .timeline-item {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .hexagon-container {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+    }
+
+    .timeline-line,
+    .timeline-dot {
+        display: none;
+    }
+
+    .timeline-content {
+        padding-left: 0;
+        text-align: center;
+    }
 }
