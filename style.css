@@ -14,8 +14,8 @@ html, body{
 .navbar {
     transition: all 0.3s ease;
     background-color: rgba(255, 255, 255, 0.678);
-    background-image: url('images/floating_image_03-2048x410.png');
-    background-position: center;
+    /* background-image: url('images/floating_image_03-2048x410.png'); */
+    /* background-position: center; */
     /* background-size: cover; */
     padding: 10px 0px !important;
     z-index: 999;
@@ -437,4 +437,182 @@ html, body{
         min-width: 200px;
         height: 120px;
     }
+}
+
+/* pparalax css */
+.parallax-container {
+    /* Set a specific height */
+    height: 500px;
+    
+    /* Create the parallax effect */
+    background-image: url('images/h5-parallax-01.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    /* Ensure full width */
+    width: 100%;
+    position: relative;
+}
+
+.text-overlay {
+    /* Center the text both vertically and horizontally */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+   
+    /* Text styling */
+    color: white;
+    border-radius: 40px !important;
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(235, 235, 235, 0.774); /* Semi-transparent background */
+    border-radius: 10px;
+}
+
+.text-overlay h1{
+    font-family: alex brush !important; 
+    color: #3e3636;
+    font-weight: 500;
+}
+/* Make text responsive */
+@media (max-width: 768px) {
+    .text-overlay h1 {
+        font-size: 1.8rem !important;
+    }
+    .text-overlay p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .text-overlay h1 {
+        font-size: 1.5rem;
+    }
+    .text-overlay p {
+        font-size: 0.9rem;
+    }
+    .parallax-container {
+        height: 300px;
+    }
+}
+
+
+.aboutus-container{
+    margin-top: 90px;
+}
+.aboutus-container h6{
+    text-align: center;
+    color: #6E7556;
+    font-family:Arimo;
+
+}
+.aboutus-container h1{
+    font-family:  alex brush;
+    text-align: center;
+}
+.aboutus-container p{
+    text-align: center;
+    margin-top: 10px;
+    max-width: 800px;
+    font-size: 17px;
+    color: #3e3e3e;
+    /* font-family: alex brush; */
+}
+
+/*  */
+/* From Uiverse.io by JaydipPrajapati1910 */ 
+.button {
+    font-size: 18px;
+    color: #fdefef;
+    font-family: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color;
+  }
+  
+  .button:focus,
+  .button:hover {
+    color: #f6d8ff;
+  }
+  
+  .button:focus:after,
+  .button:hover:after {
+    width: 100%;
+    left: 0%;
+  }
+  
+  .button:after {
+    content: "";
+    pointer-events: none;
+    bottom: -2px;
+    left: 50%;
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: rgb(255, 196, 196);
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: width, left;
+  }
+
+
+  /* contact us  */
+  .form-title {
+    font-family: alex brush;
+    color: #6b8e23;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+.form-label {
+    color: #202020;
+}
+.form-control, .form-check-label {
+    color: #6b8e23;
+}
+.btn-submit {
+    color: #6b8e23;
+    border: none;
+    background: none;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.contact-form label{
+    font-family: alex brush;
+    font-size: 22px;
+}
+.contact-form{
+    width: 100%;
+    max-width: 600px;
+}
+
+
+.service-container img{
+    transition: 0.5s ease !important;
+}
+
+.service-container h2{
+    font-family: alex brush;
+    margin-top: 30px;
+    letter-spacing: 5px;
+}
+
+.service-container img:hover{
+    transform: translateY(-15px);
+}
+
+
+.carousel-item img{
+    height: 600px;
+    width: 100%;
 }
