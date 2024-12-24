@@ -127,3 +127,95 @@ document.querySelector('.gslider').addEventListener('mouseleave', () => {
 // Initial setup
 animateSlide(0);
 startAutoplay();
+
+
+
+// gsap img and video marquee right to left
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.querySelector('.media-track');
+    const items = document.querySelectorAll('.media-item:not(.clone)');
+    const totalWidth = Array.from(items).reduce((acc, item) => {
+        return acc + item.offsetWidth + 20; // 20px is the gap
+    }, 0);
+
+    // Initialize GSAP timeline
+    const tl = gsap.timeline({ repeat: -1 });
+
+    // Animate the track
+    tl.to(track, {
+        x: -totalWidth,
+        duration: 30,
+        ease: "none",
+        onComplete: () => {
+            gsap.set(track, { x: 0 });
+        }
+    });
+
+    // Pause on hover
+    track.addEventListener('mouseenter', () => {
+        tl.pause();
+    });
+
+    track.addEventListener('mouseleave', () => {
+        tl.play();
+    });
+
+    // Handle resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Reset animation
+            tl.restart();
+        }, 250);
+    });
+});
+
+
+
+// gsap img slider left to right
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Using different class names to avoid conflicts
+    const slider = document.querySelector('.slider-inner');
+    const slides = document.querySelectorAll('.slide-element:not(.slide-clone)');
+    
+    // Calculate total width including gap
+    const totalWidth = Array.from(slides).reduce((acc, slide) => {
+        return acc + slide.offsetWidth + 20; // 20px gap
+    }, 0);
+
+    // Set initial position for left-to-right movement
+    gsap.set(slider, { x: -totalWidth });
+
+    // Create timeline with different variable name
+    const sliderTimeline = gsap.timeline({ repeat: -1 });
+
+    // Animate from left to right
+    sliderTimeline.to(slider, {
+        x: 0,
+        duration: 30,
+        ease: "none",
+        onComplete: () => {
+            gsap.set(slider, { x: -totalWidth });
+        }
+    });
+
+    // Hover handlers with unique names
+    slider.addEventListener('mouseenter', () => {
+        sliderTimeline.pause();
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        sliderTimeline.play();
+    });
+
+    // Resize handler with different timeout variable
+    let sliderResizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(sliderResizeTimeout);
+        sliderResizeTimeout = setTimeout(() => {
+            sliderTimeline.restart();
+        }, 250);
+    });
+});
