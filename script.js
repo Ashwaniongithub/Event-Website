@@ -1,3 +1,4 @@
+// navbar js 
 window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
@@ -8,6 +9,7 @@ window.addEventListener('scroll', function() {
 });
 
 
+// gsap slider
 
 let currentSlide = 0;
 const slides = document.querySelectorAll('.gslide');
